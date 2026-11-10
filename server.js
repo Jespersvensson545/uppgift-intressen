@@ -16,6 +16,15 @@ app.get('/health', (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'dist')))
 
+app.get('/api/error', (req, res) => {
+    throw new Error('Testfel från api')
+})
+
+app.use((err, req, res, next) => {
+    console.error(`ERROR: ${err.message} (${req.method} $(req.url))`)
+    res.status(500).json({ error: 'något gick fel på servern'})
+})
+
 app.listen(PORT, '0.0.0.0', () => {
-    console.info(`INFO: Server sterted on port ${PORT}`)
+    console.info(`INFO: Server started on port ${PORT}`)
 })
