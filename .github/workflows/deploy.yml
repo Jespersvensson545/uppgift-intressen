@@ -1,0 +1,33 @@
+name: Build and Deploy
+
+# kör när man oushar till main
+on:
+    push:
+        branches: [main]
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: build app
+              run: npm run build
+
+            - name: Build docker image
+              run: docker build -t uppgift-intressen .
+
+            #triggar render om alla steg ovan går igenom
+            - name: Trigger deploy on Render
+              run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
