@@ -21,8 +21,8 @@ app.get('/api/error', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-    console.error(`ERROR: ${err.message} (${req.method} $(req.url))`)
-    res.status(500).json({ error: 'något gick fel på servern'})
+    console.error(`ERROR: ${err.message} (${req.method} ${req.url})`)
+    res.status(500).json({ error: 'något gick fel på servern' })
 })
 
 app.listen(PORT, '0.0.0.0', () => {
