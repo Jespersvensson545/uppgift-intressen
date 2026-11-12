@@ -20,6 +20,10 @@ app.get('/api/error', (req, res) => {
     throw new Error('Testfel från api')
 })
 
+app.get('/{*splat}', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
+
 app.use((err, req, res, next) => {
     console.error(`ERROR: ${err.message} (${req.method} ${req.url})`)
     res.status(500).json({ error: 'något gick fel på servern' })

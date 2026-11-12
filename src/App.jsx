@@ -1,36 +1,19 @@
-import { useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
+import Home from './pages/Home.jsx'
+import About from './pages/About.jsx'
 import './App.css'
 
 function App() {
-    const [text, setText] = useState('')
-
-    const [interests, setInterests] = useState([])
-
-    function handleSubmit(e) {
-        e.preventDefault()
-        if (text.trim() === '') return
-        setInterests([...interests, text.trim()])
-        setText('')
-    }
-
     return (
         <>
-            <h1>Vad gillar du att göra?</h1>
+            <nav>
+                <Link to="/">Hem</Link> | <Link to="/om">Om</Link>
+            </nav>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    placeholder="t.ex. spela fotboll"
-                />
-                <button type="submit">Lägg till</button>
-            </form>
-
-            <ul>
-                {interests.map((interest, index) => (
-                    <li key={index}>{interest}</li>
-                ))}
-            </ul>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/om" element={<About />} />
+            </Routes>
         </>
     )
 }
