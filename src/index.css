@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: #f4f6f8;
+  color: #222;
+}
+
+#root {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 0 16px;
+  text-align: center;
+}
