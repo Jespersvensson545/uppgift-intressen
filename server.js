@@ -2,6 +2,9 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+const APP_ENV = process.env.APP_ENV || 'development'
+
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -11,10 +14,11 @@ const PORT = process.env.PORT || 3000
 
 app.get('/health', (req, res) => {
     console.info('INFO: Health check anrop')
-    res.json({ status: 'ok' })
+    res.json({ status: 'ok', environment: APP_ENV })
 })
 
 app.use(express.static(path.join(__dirname, 'dist')))
+
 
 app.get('/api/error', (req, res) => {
     throw new Error('Testfel från api')
@@ -30,5 +34,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.info(`INFO: Server started on port ${PORT}`)
+    console.info(`INFO: Server started on port ${PORT} (${APP_ENV})`)
 })
